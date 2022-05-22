@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Artikelliste{% endblock %}
+
+{% block body %}
+<div class="table-responsive mt-3">
+    <div class="float-start ms-1 mt-1 mb-1">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="Suche" aria-label="Suche" aria-describedby="search" value="{{searchParam}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" onclick="search()">Suche starten</button>
+            </div>
+        </div>
+    </div>
+    <div class="float-start ms-1 mt-1 mb-1">
+        <a class="btn btn-outline-primary" type="button" href="{{ path('app_article_list') }}">Zurück zur Liste</a>
+    </div>
+    <div class="float-end mt-1 me-1 mb-1">
+        <a class="btn btn-primary" href="{{ path('app_article_create') }}">
+            Artikel erstellen
+        </a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Art.-Nr.</th>
+            <th scope="col">Bezeichnung</th>
+            <th scope="col">Kategorie</th>
+            <th scope="col">Preis</th>
+{#            <th scope="col">Lieferant</th>#}
+{#            <th scope="col">Mindestbestand</th>#}
+{#            <th scope="col">Bestell-ID</th>#}
+{#            <th scope="col">Approval</th>#}
+{#            <th scope="col">IMAC</th>#}
+{#            <th scope="col">Kommentar</th>#}
+{#            <th scope="col">Kompatibilitäten</th>#}
+{#            <th scope="col">Mindestbestellmenge</th>#}
+{#            <th scope="col">Archiv</th>#}
+{#            <th scope="col">Archiviert am</th>#}
+{#            <th scope="col">Lagerort</th>#}
+            <th scope="col">Optionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <th>
+                    {{ article.id }}
+                </th>
+                <th>
+                    {{ article.artnumber }}
+                </th>
+                <th>
+                    {{ article.name }}
+                </th>
+                <th>
+                    {{ article.category.name }}
+                </th>
+                <th>
+                    {{ article.price }}
+                </th>
+{#                <th>#}
+{#                    {{ article.supplier.name }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.minimumstock }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.orderid }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.approval }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.imac }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.comment }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.compatibilities }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.minimumorderamount }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.archive }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.archivedate | date("d.m.Y H:i") }}#}
+{#                </th>#}
+{#                <th>#}
+{#                    {{ article.inventory }}#}
+{#                </th>#}
+                <th>
+                    <a class="btn btn-primary" href="{{ path('app_article_show', {'articleId': article.id}) }}" title="Anzeigen">
+                        <i class="bi bi-eye" title="Anzeigen"></i>
+                    </a>
+                    <a class="btn btn-primary" href="{{ path('app_article_edit', {'articleId': article.id}) }}" title="Bearbeiten">
+                        <i class="bi bi-pencil-square" title="Bearbeiten"></i>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-danger" href="{{ path('app_article_delete', {'articleId': article.id}) }}" title="Löschen">
+                            <i class="bi bi-trash" title="Löschen"></i>
+                        </a>
+                    {% endif %}
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function search() {
+            //basis-url
+            const url = "{{ listUrl }}";
+            //zieht aus input-field den Wert raus
+            const queryParam = document.getElementById('search').value;
+            //prüft, ob Länge des inputs nicht 0 ist
+            if (queryParam.length !== 0) {
+                //setzt neue url in tab
+                location.href = url + '/search/' + queryParam;
+            }
+        }
+    </script>
+{% endblock %}

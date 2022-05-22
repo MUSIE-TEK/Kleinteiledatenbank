@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Lieferant {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mb-3">
+        {% if title is same as 'bearbeiten' %}
+            <h1>Lieferant {{ supplierId }} wird bearbeitet:</h1>
+        {% else %}
+            <h1>Lieferant erstellen:</h1>
+        {% endif %}        {{ form_start(supplierEditForm) }}
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                {{ form_row(supplierEditForm.name) }}
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-outline-primary">Speichern</button>
+        </div>
+        {{ form_end(supplierEditForm) }}
+    </div>
+{% endblock %}
+
+
+

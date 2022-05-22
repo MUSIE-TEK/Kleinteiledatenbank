@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutzer Liste{% endblock %}
+
+{% block body %}
+ <table class="table">
+  <thead>
+  <tr>
+   <th scope="col">#</th>
+   <th scope="col">E-Mail</th>
+   <th scope="col">Rollen</th>
+   <th scope="col">Optionen</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for user in users %}
+   <tr>
+    <th>
+     {{ user.id }}
+    </th>
+    <th>
+     {{ user.email }}
+    </th>
+    <th>
+     {{ user.roles | join(', ') }}
+    </th>
+    <th>
+     <a class="btn btn-primary" href="{{ path('app_user_edit', {'userId': user.id}) }}" title="Bearbeiten">
+      <i class="bi bi-pencil-square" title="Bearbeiten"></i>
+     </a>
+     {% if is_granted('ROLE_ADMIN') %}
+      <button class="btn btn-danger" title="Löschen">
+       <i class="bi bi-trash" title="Löschen"></i>
+      </button>
+     {% endif %}
+    </th>
+   </tr>
+  {% endfor %}
+  </tbody>
+ </table>
+{% endblock %}

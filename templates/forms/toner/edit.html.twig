@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Toner {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mb-3">
+        {% if title is same as 'bearbeiten' %}
+            <h1>Toner {{ tonerId }} wird bearbeitet:</h1>
+        {% elseif title is same as 'Detailansicht' %}
+            <h1>Toner {{ tonerId }} Detailansicht:</h1>
+        {% else %}
+            <h1>Toner hinzufügen:</h1>
+        {% endif %}
+        {{ form_start(tonerEditForm) }}
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.articleNumber) }}
+
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.position) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.description) }}
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.quantity) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.color) }}
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(tonerEditForm.addedAt) }}
+            </div>
+        </div>
+        {% if title is same as 'Detailansicht' %}
+            <div class="text-center">
+                <a class="btn btn-outline-primary" href="{{ path('app_toner_list') }}">Zurück</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-primary">Speichern</button>
+            </div>
+        {% endif %}
+
+        {{ form_end(tonerEditForm) }}
+    </div>
+{% endblock %}
+
+
+

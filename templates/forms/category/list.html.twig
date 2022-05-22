@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kateogrieliste{% endblock %}
+
+{% block body %}
+
+<div class="table-responsive mt-3">
+    <div class="float-start ms-1 mt-1 mb-1">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="Suche" aria-label="Suche" aria-describedby="search" value="{{searchParam}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" onclick="search()">Suche starten</button>
+            </div>
+        </div>
+    </div>
+    <div class="float-start ms-1 mt-1 mb-1">
+        <a class="btn btn-outline-primary" type="button" href="{{ path('app_category_list') }}">Zurück zur Liste</a>
+    </div>
+    <div class="float-end">
+        <a class="btn btn-primary" href="{{ path('app_category_create') }}">
+            Kategorie erstellen
+        </a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Abkürzung</th>
+            <th scope="col">Bezeichnung</th>
+            <th scope="col">Optionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <th>
+                    {{ category.id }}
+                </th>
+                <th>
+                    {{ category.shortcut }}
+                </th>
+                <th>
+                    {{ category.name }}
+                </th>
+
+                <th>
+                    <a class="btn btn-primary" href="{{ path('app_category_edit', {'categoryId': category.id}) }}" title="Bearbeiten">
+                        <i class="bi bi-pencil-square" title="Bearbeiten"></i>
+                    </a>
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function search() {
+            const url = "{{ listUrl }}";
+            const queryParam = document.getElementById('search').value;
+            if (queryParam.length !== 0) {
+                location.href = url + '/search/' + queryParam;
+            }
+        }
+    </script>
+{% endblock %}

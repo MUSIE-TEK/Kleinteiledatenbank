@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Artikel {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mb-3">
+        {% if title is same as 'bearbeiten' %}
+            <h1>Artikel {{ articleId }} wird bearbeitet:</h1>
+        {% elseif title is same as 'Detailansicht' %}
+            <h1>Artikel {{ articleId }} Detailansicht:</h1>
+        {% else %}
+            <h1>Artikel erstellen:</h1>
+        {% endif %}
+        {{ form_start(articleEditForm) }}
+        <div class="row">
+{#            lg = ab der Displaybreite 6, die Größe im grid#}
+{#            col-12 = unter der Displaybreite 6, die Größe 12#}
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.name) }}
+
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.artnumber) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.category) }}
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.supplier) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.price) }}
+            </div>
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.minimumstock) }}
+            </div>
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.orderid) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.approval) }}
+            </div>
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.minimumorderamount) }}
+            </div>
+            <div class="col-lg-4 col-12">
+                {{ form_row(articleEditForm.imac) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.comment) }}
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.compatibilities) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.archivedate) }}
+            </div>
+            <div class="col-lg-6 col-12">
+                {{ form_row(articleEditForm.inventory) }}
+            </div>
+        </div>
+        {{ form_row(articleEditForm.archive) }}
+        {% if title is same as 'Detailansicht' %}
+{#            zentriert den Text#}
+            <div class="text-center">
+                <a class="btn btn-outline-primary" href="{{ path('app_article_list') }}">Zurück</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-primary">Speichern</button>
+            </div>
+        {% endif %}
+
+        {{ form_end(articleEditForm) }}
+    </div>
+{% endblock %}
+
+
+

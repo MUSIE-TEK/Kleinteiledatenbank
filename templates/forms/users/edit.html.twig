@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Nutzer bearbeiten
+{% endblock %}
+
+{% block body %}
+    {{ form_start(userEditForm) }}
+    {{ form_row(userEditForm.email) }}
+    {{ form_row(userEditForm.plainPassword, {
+            label: 'Password (Leer lassen um Passwort nicht zu ändern)'
+        })
+    }}
+    {{ form_row(userEditForm.roles) }}
+
+    <button type="submit" class="btn">Speichern</button>
+    {{ form_end(userEditForm) }}
+{% endblock %}
+
+
+

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="row text-center justify-content-center mt-3">
+        <div class="card col-lg-4 col-12">
+            <div class="card-body">
+                <h5 class="card-title">Registrieren</h5>
+                {{ form_start(registrationForm) }}
+                        {{ form_row(registrationForm.email) }}
+                        {{ form_row(registrationForm.plainPassword) }}
+                    <input type="hidden" name="_target_path" value="/">
+                    <button type="submit" class="btn btn-primary mt-2">Registrieren</button>
+                {{ form_end(registrationForm) }}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path('app_login') }}">Zum Login</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

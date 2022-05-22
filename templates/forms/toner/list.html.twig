@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tonerliste{% endblock %}
+
+{% block body %}
+<div class="table-responsive mt-3">
+    <div class="float-start ms-1 mt-1 mb-1">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="Suche" aria-label="Suche" aria-describedby="search" value="{{searchParam}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" onclick="search()">Suche starten</button>
+            </div>
+        </div>
+    </div>
+    <div class="float-start ms-1 mt-1 mb-1">
+        <a class="btn btn-outline-primary" type="button" href="{{ path('app_toner_list') }}">Zurück zur Liste</a>
+    </div>
+    <div class="float-end mt-1 me-1 mb-1">
+        <a class="btn btn-primary" href="{{ path('app_toner_create') }}">
+            Toner hinzufügen
+        </a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Art.-Nr.</th>
+            <th scope="col">Position</th>
+            <th scope="col">Bezeichnung</th>
+            <th scope="col">Anzahl/Menge</th>
+            <th scope="col">Farbe</th>
+            <th scope="col">Angelegt am</th>
+            <th scope="col">Geändert am</th>
+            <th scope="col">Optionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for toner in toners %}
+            <tr>
+                <th>
+                    {{ toner.id }}
+                </th>
+                <th>
+                    {{ toner.articleNumber }}
+                </th>
+                <th>
+                    {{ toner.position }}
+                </th>
+                <th>
+                    {{ toner.description }}
+                </th>
+                <th>
+                    {{ toner.quantity }}
+                </th>
+                <th>
+                    {{ toner.color }}
+                </th>
+                <th>
+                    {{ toner.addedAt != null ? toner.addedAt.format('Y-m-d H:i:s') : '-' }}
+                </th>
+                <th>
+                    {{ toner.changedAt != null ? toner.changedAt.format('Y-m-d H:i:s') : '-' }}
+                </th>
+                <th>
+                    <a class="btn btn-primary" href="{{ path('app_toner_show', {'tonerId': toner.id}) }}" title="Anzeigen">
+                        <i class="bi bi-eye" title="Anzeigen"></i>
+                    </a>
+                    <a class="btn btn-primary" href="{{ path('app_toner_edit', {'tonerId': toner.id}) }}" title="Bearbeiten">
+                        <i class="bi bi-pencil-square" title="Bearbeiten"></i>
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="btn btn-danger" href="{{ path('app_toner_delete', {'tonerId': toner.id}) }}" title="Löschen">
+                            <i class="bi bi-trash" title="Löschen"></i>
+                        </a>
+                    {% endif %}
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function search() {
+            const url = "{{ listUrl }}";
+            const queryParam = document.getElementById('search').value;
+            if (queryParam.length !== 0) {
+                location.href = url + '/search/' + queryParam;
+            }
+        }
+    </script>
+{% endblock %}

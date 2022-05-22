@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lieferantenliste{% endblock %}
+
+{% block body %}
+<div class="table-responsive mt-3">
+    <div class="float-start ms-1 mt-1 mb-1">
+        <div class="input-group">
+            <input id="search" type="text" class="form-control" placeholder="Suche" aria-label="Suche" aria-describedby="search" value="{{searchParam}}">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="button" onclick="search()">Suche starten</button>
+            </div>
+        </div>
+    </div>
+    <div class="float-start ms-1 mt-1 mb-1">
+        <a class="btn btn-outline-primary" type="button" href="{{ path('app_supplier_list') }}">Zurück zur Liste</a>
+    </div>
+    <div class="float-end">
+        <a class="btn btn-primary" href="{{ path('app_supplier_create') }}">
+            Lieferanten erstellen
+        </a>
+    </div>
+<table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Bezeichnung</th>
+            <th scope="col">Optionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for supplier in suppliers %}
+            <tr>
+                <th>
+                    {{ supplier.id }}
+                </th>
+                <th>
+                    {{ supplier.name }}
+                </th>
+
+                <th>
+                    <a class="btn btn-primary" href="{{ path('app_supplier_edit', {'supplierId': supplier.id}) }}" title="Bearbeiten">
+                        <i class="bi bi-pencil-square" title="Bearbeiten"></i>
+                    </a>
+                </th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function search() {
+            const url = "{{ listUrl }}";
+            const queryParam = document.getElementById('search').value;
+            if (queryParam.length !== 0) {
+                location.href = url + '/search/' + queryParam;
+            }
+        }
+    </script>
+{% endblock %}
